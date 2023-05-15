@@ -31,7 +31,7 @@ public class Main {
 
 		getBest();
 
-		getVoteRange(1, 1);
+		getVoteRange(3.1, 7.2);
 	}
 
 	public static void insertStudent(int id, String name, String surname, String gender, double avg, double min_vote,
@@ -98,11 +98,11 @@ public class Main {
 		String sqlRange = "SELECT * FROM school_students WHERE min_vote >= ? AND mav_vote <= ?";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sqlRange);
-			stmt.setDouble(1, 3.3);
-			stmt.setDouble(2, 5.3);
-			ResultSet students = stmt.executeQuery(sqlRange);
+			stmt.setDouble(1, min);
+			stmt.setDouble(2, max);
+			ResultSet students = stmt.executeQuery();
 			while (students.next()) {
-				System.out.println("Lo studente con questo range di voti è:" + " " + students.getString("name")
+				System.out.println("Lo studente con questo range di voti è:" + " " + students.getString("name") + " "
 						+ students.getString("surname"));
 
 			}
