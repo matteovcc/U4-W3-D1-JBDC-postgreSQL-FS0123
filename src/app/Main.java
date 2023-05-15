@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 
 public class Main {
 	static Connection conn = null;
@@ -27,11 +28,15 @@ public class Main {
 //		insertStudent(4, "Maria", "Rossi", "F", 7.0, 6.0, 8.0);
 //		insertStudent(5, "Bella", "Viola", "F", 6.0, 5.0, 7.0);
 //		updateStudent(1, "");
+		HashMap<String, Object> s = new HashMap<>();
+		s.put("name", "pigi");
+
 		deleteStudent();
 
 		getBest();
 
 		getVoteRange(3.1, 7.2);
+		updateStudentHash(5, s);
 	}
 
 	public static void insertStudent(int id, String name, String surname, String gender, double avg, double min_vote,
@@ -63,6 +68,19 @@ public class Main {
 			stmtUpdateOne.setInt(2, 4);
 			stmtUpdateOne.execute();
 			System.out.println("Studente modificato");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void updateStudentHash(int id, HashMap<String, Object> s) {
+		String sqlUpdateOne = "UPDATE school_students SET name = ? WHERE id = ?";
+		try {
+			PreparedStatement stmtUpdateOne = conn.prepareStatement(sqlUpdateOne);
+			stmtUpdateOne.setObject(1, s.get("name"));
+			stmtUpdateOne.setInt(2, 5);
+			stmtUpdateOne.execute();
+			System.out.println("Studente modificato nell Hash");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
